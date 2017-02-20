@@ -38,8 +38,8 @@ Please also note that game resources are covered by a separate licence. Please s
 1- Use `git init` to initialize local repository  
 2- `git remote add <some_name> https://github.com/olgunataberk/osu.git` to set this repository as your projects remote repo.  
 3- Pull from remote repository `git pull <some_name> master`  
-4- You may use `git submodule` to see which submodules our repository points to.
-5- `git submodule init` to initialize submodules in local repository.
+4- You may use `git submodule` to see which submodules our repository points to.  
+5- `git submodule init` to initialize submodules in local repository.  
 6- Finally use `git submodule update` to fetch submodules (This may take some time).
 
 ### Setting up development environment
