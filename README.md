@@ -49,8 +49,8 @@ Download either [Visual Studio](https://www.visualstudio.com/tr/free-developer-o
 If you are using MonoDevelop, after importing the project you need to set your compiler's target CPU to x86.
 
 Double click on the osu.Desktop folder in project tree to view project settings.  
-![ScreenShot](http://imgur.com/9jpisT0)
+![ScreenShot](http://i.imgur.com/9jpisT0.png)
 
-![ScreenShot](http://imgur.com/A9nyqho)  
+![ScreenShot](http://i.imgur.com/A9nyqho.png) 
 
 After setting the target CPU you can run the program.
