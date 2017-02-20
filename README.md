@@ -31,7 +31,18 @@ Please note that this *does not cover* the usage of the "osu!" or "ppy" branding
 
 Please also note that game resources are covered by a separate licence. Please see the [ppy/osu-resources](https://github.com/ppy/osu-resources) repository for clarifications.
 
-# Setup
+#Bil-481 Project
+
+## Team
+
+###Group 12
+  
+Ataberk Olgun  
+Fatma Nisa Bostanci  
+Selen Yel  
+Özge Güleryüz
+
+## Setup
 
 ### Setting up local git repository
 
