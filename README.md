@@ -30,3 +30,27 @@ The osu! client code and framework are licensed under the [MIT licence](https://
 Please note that this *does not cover* the usage of the "osu!" or "ppy" branding in any software, resources, advertising or promotion, as this is protected by trademark law.
 
 Please also note that game resources are covered by a separate licence. Please see the [ppy/osu-resources](https://github.com/ppy/osu-resources) repository for clarifications.
+
+# Setup
+
+### Setting up local git repository
+
+1- Use `git init` to initialize local repository  
+2- `git remote add <some_name> https://github.com/olgunataberk/osu.git` to set this repository as your projects remote repo.  
+3- Pull from remote repository `git pull <some_name> master`  
+4- You may use `git submodule` to see which submodules our repository points to.
+5- `git submodule init` to initialize submodules in local repository.
+6- Finally use `git submodule update` to fetch submodules (This may take some time).
+
+### Setting up development environment
+
+Download either [Visual Studio](https://www.visualstudio.com/tr/free-developer-offers/) or [MonoDevelop](http://www.monodevelop.com/download/) to use as an IDE. 
+
+If you are using MonoDevelop, after importing the project you need to set your compiler's target CPU to x86.
+
+Double click on the osu.Desktop folder in project tree to view project settings.  
+![ScreenShot](http://imgur.com/9jpisT0)
+
+![ScreenShot](http://imgur.com/A9nyqho)  
+
+After setting the target CPU you can run the program.
