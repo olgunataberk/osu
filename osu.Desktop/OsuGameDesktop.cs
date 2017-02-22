@@ -20,26 +20,27 @@ namespace osu.Desktop
 {
     class OsuGameDesktop : OsuGame
     {
-        private VersionManager versionManager;
+        //private VersionManager versionManager;
 
-        public override bool IsDeployedBuild => versionManager.IsDeployedBuild;
+        //public override bool IsDeployedBuild => versionManager.IsDeployedBuild;
 
         public OsuGameDesktop(string[] args = null)
             : base(args)
         {
-            versionManager = new VersionManager { Depth = int.MinValue };
+            //versionManager = new VersionManager { Depth = int.MinValue };
         }
 
         protected override void LoadComplete()
         {
             base.LoadComplete();
-
+            /*
             versionManager.Preload(this);
             ModeChanged += m =>
             {
                 if (!versionManager.IsAlive && m is Intro)
                     Add(versionManager);
             };
+            */
         }
 
         public override void SetHost(BasicGameHost host)
