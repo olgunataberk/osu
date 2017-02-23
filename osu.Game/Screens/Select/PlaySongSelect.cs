@@ -54,34 +54,12 @@ namespace osu.Game.Screens.Select
 
         private Footer footer;
 
-        Player player;
+        OsuScreen player;
+
         FilterControl filter;
 
-        private void start()
-        {
-            if (player != null || Beatmap == null)
-                return;
-
-            //in the future we may want to move this logic to a PlayerLoader gamemode or similar, so we can rely on the SongSelect transition
-            //and provide a better loading experience (at the moment song select is still accepting input during preload).
-            player = new Player
-            {
-                BeatmapInfo = carousel.SelectedGroup.SelectedPanel.Beatmap,
-                PreferredPlayMode = playMode.Value
-            };
-
-            player.Preload(Game, delegate
-            {
-                if (!Push(player))
-                {
-                    player = null;
-                    //error occured?
-                }
-            });
-        }
-
         [BackgroundDependencyLoader(permitNulls: true)]
-        private void load(BeatmapDatabase beatmaps, AudioManager audio, BaseGame game,
+        private void load(BeatmapDatabase beatmaps, AudioManager audio, Framework.Game game,
             OsuGame osuGame, OsuColour colours)
         {
             const float carousel_width = 640;
@@ -132,10 +110,20 @@ namespace osu.Game.Screens.Select
                         Right = 20,
                     },
                 },
-                footer = new Footer()
+                footer = new Footer
                 {
                     OnBack = Exit,
-                    OnStart = start,
+                    OnStart = () =>
+                    {
+                        if (player != null || Beatmap == null)
+                            return;
+
+                        (player = new PlayerLoader(new Player
+                        {
+                            BeatmapInfo = carousel.SelectedGroup.SelectedPanel.Beatmap,
+                            PreferredPlayMode = playMode.Value
+                        })).Preload(Game, l => Push(player));
+                    }
                 }
             };
 
@@ -276,6 +264,7 @@ namespace osu.Game.Screens.Select
             {
                 backgroundModeBeatmap.Beatmap = beatmap;
                 backgroundModeBeatmap.BlurTo(background_blur, 1000);
+                backgroundModeBeatmap.FadeTo(1, 250);
             }
 
             if (beatmap != null)
@@ -328,7 +317,7 @@ namespace osu.Game.Screens.Select
             }
         }
 
-        private void addBeatmapSet(BeatmapSetInfo beatmapSet, BaseGame game, bool select = false)
+        private void addBeatmapSet(BeatmapSetInfo beatmapSet, Framework.Game game, bool select = false)
         {
             beatmapSet = database.GetWithChildren<BeatmapSetInfo>(beatmapSet.ID);
             beatmapSet.Beatmaps.ForEach(b =>
@@ -337,14 +326,16 @@ namespace osu.Game.Screens.Select
                 if (b.Metadata == null) b.Metadata = beatmapSet.Metadata;
             });
 
+            foreach (var b in beatmapSet.Beatmaps)
+                b.ComputeDifficulty(database);
             beatmapSet.Beatmaps = beatmapSet.Beatmaps.OrderBy(b => b.StarDifficulty).ToList();
 
             var beatmap = new WorkingBeatmap(beatmapSet.Beatmaps.FirstOrDefault(), beatmapSet, database);
 
-            var group = new BeatmapGroup(beatmap, beatmapSet)
+            var group = new BeatmapGroup(beatmap)
             {
                 SelectionChanged = selectionChanged,
-                StartRequested = b => start()
+                StartRequested = b => footer.StartButton.TriggerClick()
             };
 
             //for the time being, let's completely load the difficulty panels in the background.
@@ -366,7 +357,7 @@ namespace osu.Game.Screens.Select
             }));
         }
 
-        private void addBeatmapSets(BaseGame game, CancellationToken token)
+        private void addBeatmapSets(Framework.Game game, CancellationToken token)
         {
             foreach (var beatmapSet in database.Query<BeatmapSetInfo>())
             {
@@ -380,7 +371,7 @@ namespace osu.Game.Screens.Select
             switch (args.Key)
             {
                 case Key.Enter:
-                    start();
+                    footer.StartButton.TriggerClick();
                     return true;
             }
 

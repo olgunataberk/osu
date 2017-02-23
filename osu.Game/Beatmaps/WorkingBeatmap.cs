@@ -68,7 +68,6 @@ namespace osu.Game.Beatmaps
                                 beatmap = decoder?.Decode(stream);
                             }
 
-
                             if (WithStoryboard && beatmap != null && BeatmapSetInfo.StoryboardFile != null)
                                 using (var stream = new StreamReader(reader.GetStream(BeatmapSetInfo.StoryboardFile)))
                                     decoder?.Decode(stream, beatmap);
@@ -114,6 +113,8 @@ namespace osu.Game.Beatmaps
         public WorkingBeatmap(Beatmap beatmap)
         {
             this.beatmap = beatmap;
+            BeatmapInfo = beatmap.BeatmapInfo;
+            BeatmapSetInfo = beatmap.BeatmapInfo.BeatmapSet;
         }
 
         public WorkingBeatmap(BeatmapInfo beatmapInfo, BeatmapSetInfo beatmapSetInfo, BeatmapDatabase database, bool withStoryboard = false)

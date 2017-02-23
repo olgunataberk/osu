@@ -43,7 +43,7 @@ namespace osu.Desktop
             */
         }
 
-        public override void SetHost(BasicGameHost host)
+        public override void SetHost(GameHost host)
         {
             base.SetHost(host);
             var desktopWindow = host.Window as DesktopGameWindow;
