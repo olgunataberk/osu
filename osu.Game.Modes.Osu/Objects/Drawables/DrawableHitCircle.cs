@@ -21,7 +21,11 @@ namespace osu.Game.Modes.Osu.Objects.Drawables
         private ExplodePiece explode;
         private NumberPiece number;
         private GlowPiece glow;
-
+        public double GetRandomNumber(double minimum, double maximum)
+        {
+            Random random = new Random();
+            return random.NextDouble() * (maximum - minimum) + minimum;
+        }
         public DrawableHitCircle(OsuHitObject h) : base(h)
         {
             Origin = Anchor.Centre;
@@ -29,7 +33,8 @@ namespace osu.Game.Modes.Osu.Objects.Drawables
             osuObject = h;
 
             Position = osuObject.StackedPosition;
-            Scale = new Vector2(osuObject.Scale);
+            float dynamic = (float)GetRandomNumber(0.1, 4);
+            Scale = new Vector2(dynamic*osuObject.Scale);
 
             Children = new Drawable[]
             {
