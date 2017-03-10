@@ -21,6 +21,11 @@ namespace osu.Game.Modes.Osu.Objects.Drawables
         private ExplodePiece explode;
         private NumberPiece number;
         private GlowPiece glow;
+        private float size;
+        public float getSize()
+        {
+            return size;
+        }
         public double GetRandomNumber(double minimum, double maximum)
         {
             Random random = new Random();
@@ -34,6 +39,7 @@ namespace osu.Game.Modes.Osu.Objects.Drawables
 
             Position = osuObject.StackedPosition;
             float dynamic = (float)GetRandomNumber(0.1, 4);
+            size = dynamic;
             Scale = new Vector2(dynamic*osuObject.Scale);
 
             Children = new Drawable[]
@@ -113,6 +119,7 @@ namespace osu.Game.Modes.Osu.Objects.Drawables
             //sane defaults
             ring.Alpha = circle.Alpha = number.Alpha = glow.Alpha = 1;
             ApproachCircle.Alpha = 0;
+            
             ApproachCircle.Scale = new Vector2(4);
             explode.Alpha = 0;
         }
