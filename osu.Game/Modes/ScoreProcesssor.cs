@@ -60,6 +60,7 @@ namespace osu.Game.Modes
             Judgements = new List<JudgementInfo>(hitObjectCount);
         }
 
+        //judgement has TimeOffset information
         public void AddJudgement(JudgementInfo judgement)
         {
             Judgements.Add(judgement);

@@ -108,6 +108,7 @@ namespace osu.Game.Modes.Objects.Drawables
                 return false;
 
             Judgement.TimeOffset = Time.Current - HitObject.EndTime;
+            Judgement.TimeStamp = HitObject.StartTime;
 
             CheckJudgement(userTriggered);
 
@@ -165,6 +166,7 @@ namespace osu.Game.Modes.Objects.Drawables
         public ulong? ComboAtHit;
         public HitResult? Result;
         public double TimeOffset;
+        public double TimeStamp;
     }
 
     public enum HitResult
