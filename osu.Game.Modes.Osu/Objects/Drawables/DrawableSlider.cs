@@ -8,6 +8,7 @@ using osu.Game.Modes.Osu.Objects.Drawables.Pieces;
 using System.Collections.Generic;
 using System.Linq;
 using osu.Framework.Graphics.Containers;
+using System;
 
 namespace osu.Game.Modes.Osu.Objects.Drawables
 {
@@ -29,13 +30,14 @@ namespace osu.Game.Modes.Osu.Objects.Drawables
         public DrawableSlider(Slider s) : base(s)
         {
             slider = s;
-
+            
             Children = new Drawable[]
             {
                 body = new SliderBody(s)
                 {
                     Position = s.StackedPosition,
-                    PathWidth = s.Scale * 64,
+                    PathWidth = s.Scale * 64 ,  //slider boyu burada degisecek.
+                  // PathWidth = initialCircle.getSize()*64,
                 },
                 ticks = new Container<DrawableSliderTick>(),
                 bouncer1 = new SliderBouncer(s, false)
