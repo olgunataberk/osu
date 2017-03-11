@@ -8,10 +8,15 @@ namespace osu.Game.Modes.Osu
 {
     class OsuScoreProcessor : ScoreProcessor
     {
+
+        private double firstMissTimeStamp;
+        public double FirstMissTimeStamp => firstMissTimeStamp;
+
         public OsuScoreProcessor(int hitObjectCount)
             : base(hitObjectCount)
         {
             Health.Value = 1;
+            firstMissTimeStamp = float.NegativeInfinity;
         }
 
         protected override void UpdateCalculations(JudgementInfo judgement)
@@ -25,6 +30,7 @@ namespace osu.Game.Modes.Osu
                         Health.Value += 0.1f;
                         break;
                     case HitResult.Miss:
+                        if (firstMissTimeStamp < 0) firstMissTimeStamp = judgement.TimeStamp;
                         Combo.Value = 0;
                         Health.Value -= 0.2f;
                         break;

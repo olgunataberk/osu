@@ -135,6 +135,7 @@ namespace osu.Game.Screens.Play
             hitRenderer = ruleset.CreateHitRendererWith(beatmap);
 
             //bind HitRenderer to ScoreProcessor and ourselves (for a pass situation)
+            //GOTO Score processor line 63
             hitRenderer.OnJudgement += scoreProcessor.AddJudgement;
             hitRenderer.OnAllJudged += onPass;
 
