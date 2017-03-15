@@ -27,6 +27,7 @@ namespace osu.Game.Overlays.Pause
 
         public Action OnResume;
         public Action OnRetry;
+        public Action OnRetryFromFirstMiss;
         public Action OnQuit;
 
         public int Retries

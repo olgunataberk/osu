@@ -241,6 +241,29 @@ namespace osu.Game.Screens.Play
             });
         }
 
+        public void RestartFromFirstMiss()
+        {
+            double firstMissTimeStamp = scoreProcessor.getFirstMissTimeStamp();
+
+            sourceClock.Stop(); // If the clock is running and Restart is called the game will lag until relaunch
+
+            var newPlayer = new Player();
+
+            newPlayer.Preload(Game, delegate
+            {
+                newPlayer.RestartCount = RestartCount + 1;
+                ValidForResume = false;
+
+                if (!Push(newPlayer))
+                {
+                    // Error(?)
+                }
+            });
+
+            newPlayer.sourceClock.Seek(firstMissTimeStamp);
+
+        }
+
         protected override void LoadComplete()
         {
             base.LoadComplete();
