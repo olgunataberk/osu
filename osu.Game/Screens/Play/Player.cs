@@ -50,6 +50,8 @@ namespace osu.Game.Screens.Play
 
         public int RestartCount;
 
+        private double firstMissTime = 0;
+
         private double pauseCooldown = 1000;
         private double lastPauseActionTime = 0;
 
@@ -129,7 +131,8 @@ namespace osu.Game.Screens.Play
                     Schedule(Resume);
                 },
                 OnRetry = Restart,
-                OnQuit = Exit
+                OnQuit = Exit,
+                OnRetryFromFirstMiss = RestartFromFirstMiss
             };
 
             hitRenderer = ruleset.CreateHitRendererWith(beatmap);
@@ -252,6 +255,7 @@ namespace osu.Game.Screens.Play
             newPlayer.Preload(Game, delegate
             {
                 newPlayer.RestartCount = RestartCount + 1;
+                newPlayer.firstMissTime = firstMissTimeStamp;
                 ValidForResume = false;
 
                 if (!Push(newPlayer))
@@ -259,8 +263,6 @@ namespace osu.Game.Screens.Play
                     // Error(?)
                 }
             });
-
-            newPlayer.sourceClock.Seek(firstMissTimeStamp);
 
         }
 
@@ -276,6 +278,8 @@ namespace osu.Game.Screens.Play
             {
                 sourceClock.Start();
                 initializeSkipButton();
+                if (firstMissTime > 0)
+                    sourceClock.Seek(firstMissTime);
             });
         }
 

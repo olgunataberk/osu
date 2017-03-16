@@ -164,6 +164,18 @@ namespace osu.Game.Overlays.Pause
                                     Height = button_height,
                                     Action = resume
                                 },
+                                new RetryFromFirstMissButton
+                                {
+                                    RelativeSizeAxes = Axes.X,
+                                    Origin = Anchor.TopCentre,
+                                    Anchor = Anchor.TopCentre,
+                                    Height = button_height,
+                                    Action = delegate
+                                    {
+                                        OnRetryFromFirstMiss?.Invoke();
+                                        Hide();
+                                    }
+                                },
                                 new RetryButton
                                 {
                                     RelativeSizeAxes = Axes.X,

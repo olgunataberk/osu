@@ -116,6 +116,7 @@
     <Compile Include="Graphics\UserInterface\OsuDropDownHeader.cs" />
     <Compile Include="Graphics\UserInterface\OsuDropDownMenu.cs" />
     <Compile Include="Graphics\UserInterface\OsuDropDownMenuItem.cs" />
+    <Compile Include="Overlays\Pause\RetryFromFirstMissButton.cs" />
     <Compile Include="Overlays\Toolbar\ToolbarHomeButton.cs" />
     <Compile Include="Overlays\Toolbar\ToolbarMusicButton.cs" />
     <Compile Include="Overlays\Toolbar\ToolbarNotificationButton.cs" />
