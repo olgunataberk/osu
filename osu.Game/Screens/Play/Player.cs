@@ -143,7 +143,7 @@ namespace osu.Game.Screens.Play
             hitRenderer.OnAllJudged += onPass;
 
             //bind ScoreProcessor to ourselves (for a fail situation)
-            scoreProcessor.Failed += onFail;
+            scoreProcessor.Failed += onFailModified;
 
             if (Autoplay)
                 hitRenderer.Schedule(() => hitRenderer.DrawableObjects.ForEach(h => h.State = ArmedState.Hit));
@@ -294,6 +294,12 @@ namespace osu.Game.Screens.Play
                     Score = scoreProcessor.GetScore()
                 });
             });
+        }
+
+        private void onFailModified()
+        {
+            pauseOverlay.modifyOverlay();
+            this.TogglePaused();
         }
 
         private void onFail()

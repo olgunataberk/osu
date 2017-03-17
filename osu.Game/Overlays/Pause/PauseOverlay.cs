@@ -30,6 +30,8 @@ namespace osu.Game.Overlays.Pause
         public Action OnRetryFromFirstMiss;
         public Action OnQuit;
 
+        private ResumeButton resumeButton;
+
         public int Retries
         {
             set
@@ -66,6 +68,12 @@ namespace osu.Game.Overlays.Pause
                     };
                 }
             }
+        }
+
+        public void modifyOverlay()
+        {
+            resumeButton.Hide(true);
+            OnResume = null;
         }
 
         private FlowContainer retryCounterContainer;
@@ -156,14 +164,7 @@ namespace osu.Game.Overlays.Pause
                             },
                             Children = new Drawable[]
                             {
-                                new ResumeButton
-                                {
-                                    RelativeSizeAxes = Axes.X,
-                                    Origin = Anchor.TopCentre,
-                                    Anchor = Anchor.TopCentre,
-                                    Height = button_height,
-                                    Action = resume
-                                },
+                                resumeButton,
                                 new RetryFromFirstMissButton
                                 {
                                     RelativeSizeAxes = Axes.X,
@@ -229,7 +230,15 @@ namespace osu.Game.Overlays.Pause
 
         public PauseOverlay()
         {
-            RelativeSizeAxes = Axes.Both;
+        resumeButton = new ResumeButton
+        {
+            RelativeSizeAxes = Axes.X,
+            Origin = Anchor.TopCentre,
+            Anchor = Anchor.TopCentre,
+            Height = button_height,
+            Action = resume
+        };
+        RelativeSizeAxes = Axes.Both;
         }
     }
 }
