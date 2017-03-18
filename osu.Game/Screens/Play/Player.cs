@@ -62,6 +62,7 @@ namespace osu.Game.Screens.Play
         private ScoreProcessor scoreProcessor;
         private HitRenderer hitRenderer;
         private Bindable<int> dimLevel;
+        private bool dCircleSize;
         private SkipButton skipButton;
 
         private ScoreOverlay scoreOverlay;
@@ -72,10 +73,11 @@ namespace osu.Game.Screens.Play
         private void load(AudioManager audio, BeatmapDatabase beatmaps, OsuGameBase game, OsuConfigManager config)
         {
             dimLevel = config.GetBindable<int>(OsuConfig.DimLevel);
+            dCircleSize = config.GetBindable<bool>(OsuConfig.DynamicCircleSize);
             try
             {
                 if (Beatmap == null)
-                    Beatmap = beatmaps.GetWorkingBeatmap(BeatmapInfo, withStoryboard: true);
+                    Beatmap = beatmaps.GetWorkingBeatmap(BeatmapInfo, withStoryboard: true, dynamicCircleSize:dCircleSize);
 
                 if ((Beatmap?.Beatmap?.HitObjects.Count ?? 0) == 0)
                     throw new Exception("No valid objects were found!");

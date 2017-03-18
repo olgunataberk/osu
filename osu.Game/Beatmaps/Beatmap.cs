@@ -12,6 +12,7 @@ namespace osu.Game.Beatmaps
 {
     public class Beatmap
     {
+        public bool dynamicCircleSize { get; set; }
         public BeatmapInfo BeatmapInfo { get; set; }
         public BeatmapMetadata Metadata => BeatmapInfo?.Metadata ?? BeatmapInfo?.BeatmapSet?.Metadata;
         public List<HitObject> HitObjects { get; set; }

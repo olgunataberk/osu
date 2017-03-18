@@ -58,6 +58,11 @@ namespace osu.Game.Overlays.Options.Sections.Gameplay
                     LabelText = "Remember osu!mania scroll speed per beatmap",
                     Bindable = config.GetBindable<bool>(OsuConfig.UsePerBeatmapManiaSpeed)
                 },
+                new OsuCheckbox
+                {
+                    LabelText = "Dynamic circle size enable",
+                    Bindable = config.GetBindable<bool>(OsuConfig.DynamicCircleSize)
+                },
             };
         }
     }

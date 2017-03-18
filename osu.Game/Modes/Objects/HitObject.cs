@@ -13,6 +13,7 @@ namespace osu.Game.Modes.Objects
     /// </summary>
     public abstract class HitObject
     {
+        public bool dynamicCircleSize;
         public double StartTime;
         public virtual double EndTime => StartTime;
 
