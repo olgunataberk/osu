@@ -27,7 +27,10 @@ namespace osu.Game.Overlays.Pause
 
         public Action OnResume;
         public Action OnRetry;
+        public Action OnRetryFromFirstMiss;
         public Action OnQuit;
+
+        private ResumeButton resumeButton;
 
         public int Retries
         {
@@ -65,6 +68,12 @@ namespace osu.Game.Overlays.Pause
                     };
                 }
             }
+        }
+
+        public void modifyOverlay()
+        {
+            resumeButton.Hide(true);
+            OnResume = null;
         }
 
         private FlowContainer retryCounterContainer;
@@ -155,13 +164,18 @@ namespace osu.Game.Overlays.Pause
                             },
                             Children = new Drawable[]
                             {
-                                new ResumeButton
+                                resumeButton,
+                                new RetryFromFirstMissButton
                                 {
                                     RelativeSizeAxes = Axes.X,
                                     Origin = Anchor.TopCentre,
                                     Anchor = Anchor.TopCentre,
                                     Height = button_height,
-                                    Action = resume
+                                    Action = delegate
+                                    {
+                                        OnRetryFromFirstMiss?.Invoke();
+                                        Hide();
+                                    }
                                 },
                                 new RetryButton
                                 {
@@ -216,7 +230,15 @@ namespace osu.Game.Overlays.Pause
 
         public PauseOverlay()
         {
-            RelativeSizeAxes = Axes.Both;
+        resumeButton = new ResumeButton
+        {
+            RelativeSizeAxes = Axes.X,
+            Origin = Anchor.TopCentre,
+            Anchor = Anchor.TopCentre,
+            Height = button_height,
+            Action = resume
+        };
+        RelativeSizeAxes = Axes.Both;
         }
     }
 }

@@ -50,6 +50,8 @@ namespace osu.Game.Screens.Play
 
         public int RestartCount;
 
+        private double firstMissTime = 0;
+
         private double pauseCooldown = 1000;
         private double lastPauseActionTime = 0;
 
@@ -135,7 +137,8 @@ namespace osu.Game.Screens.Play
                     Schedule(Resume);
                 },
                 OnRetry = Restart,
-                OnQuit = Exit
+                OnQuit = Exit,
+                OnRetryFromFirstMiss = RestartFromFirstMiss
             };
 
             hitRenderer = ruleset.CreateHitRendererWith(beatmap);
@@ -146,7 +149,7 @@ namespace osu.Game.Screens.Play
             hitRenderer.OnAllJudged += onPass;
 
             //bind ScoreProcessor to ourselves (for a fail situation)
-            scoreProcessor.Failed += onFail;
+            scoreProcessor.Failed += onFailModified;
 
             if (Autoplay)
                 hitRenderer.Schedule(() => hitRenderer.DrawableObjects.ForEach(h => h.State = ArmedState.Hit));
@@ -247,6 +250,28 @@ namespace osu.Game.Screens.Play
             });
         }
 
+        public void RestartFromFirstMiss()
+        {
+            double firstMissTimeStamp = scoreProcessor.getFirstMissTimeStamp();
+
+            sourceClock.Stop(); // If the clock is running and Restart is called the game will lag until relaunch
+
+            var newPlayer = new Player();
+
+            newPlayer.Preload(Game, delegate
+            {
+                newPlayer.RestartCount = RestartCount + 1;
+                newPlayer.firstMissTime = firstMissTimeStamp;
+                ValidForResume = false;
+
+                if (!Push(newPlayer))
+                {
+                    // Error(?)
+                }
+            });
+
+        }
+
         protected override void LoadComplete()
         {
             base.LoadComplete();
@@ -259,6 +284,8 @@ namespace osu.Game.Screens.Play
             {
                 sourceClock.Start();
                 initializeSkipButton();
+                if (firstMissTime > 0)
+                    sourceClock.Seek(firstMissTime);
             });
         }
 
@@ -273,6 +300,12 @@ namespace osu.Game.Screens.Play
                     Score = scoreProcessor.GetScore()
                 });
             });
+        }
+
+        private void onFailModified()
+        {
+            pauseOverlay.modifyOverlay();
+            this.TogglePaused();
         }
 
         private void onFail()

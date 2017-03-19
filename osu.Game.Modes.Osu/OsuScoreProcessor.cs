@@ -10,7 +10,6 @@ namespace osu.Game.Modes.Osu
     {
 
         private double firstMissTimeStamp;
-        public double FirstMissTimeStamp => firstMissTimeStamp;
 
         public OsuScoreProcessor(int hitObjectCount)
             : base(hitObjectCount)
@@ -49,5 +48,7 @@ namespace osu.Game.Modes.Osu
             TotalScore.Value = score;
             Accuracy.Value = (double)score / maxScore;
         }
+
+        public override double getFirstMissTimeStamp() => firstMissTimeStamp;
     }
 }

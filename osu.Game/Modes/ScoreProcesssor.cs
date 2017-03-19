@@ -80,5 +80,7 @@ namespace osu.Game.Modes
         /// </summary>
         /// <param name="newJudgement">A new JudgementInfo that triggered this calculation. May be null.</param>
         protected abstract void UpdateCalculations(JudgementInfo newJudgement);
+
+        public abstract double getFirstMissTimeStamp();
     }
 }

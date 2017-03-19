@@ -21,5 +21,13 @@ namespace osu.Game.Overlays.Pause
         {
             Text = @"Continue";
         }
+
+        public void Hide(bool modify)
+        {
+            if (modify)
+                base.Hide();
+            else
+                return;
+        }
     }
 }
