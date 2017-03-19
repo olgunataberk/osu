@@ -81,6 +81,10 @@ namespace osu.Game.Screens.Play
 
                 if ((Beatmap?.Beatmap?.HitObjects.Count ?? 0) == 0)
                     throw new Exception("No valid objects were found!");
+
+                foreach(Modes.Objects.HitObject h in Beatmap?.Beatmap?.HitObjects){
+                    h.dynamicCircleSize = dCircleSize;
+                }
             }
             catch (Exception e)
             {

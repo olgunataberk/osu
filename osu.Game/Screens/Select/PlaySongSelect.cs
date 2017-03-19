@@ -87,6 +87,7 @@ namespace osu.Game.Screens.Select
             const float carousel_width = 640;
             const float filter_height = 100;
 
+            
             beatmapGroups = new List<BeatmapGroup>();
             Children = new Drawable[]
             {
