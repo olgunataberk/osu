@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using osu.Framework.Graphics.Containers;
 using System;
+using osu.Framework.Logging;
 
 namespace osu.Game.Modes.Osu.Objects.Drawables
 {
@@ -29,6 +30,9 @@ namespace osu.Game.Modes.Osu.Objects.Drawables
 
         public DrawableSlider(Slider s) : base(s)
         {
+
+            isSlider = true;
+
             slider = s;
             
             Children = new Drawable[]
@@ -97,6 +101,12 @@ namespace osu.Game.Modes.Osu.Objects.Drawables
         public override bool Contains(Vector2 screenSpacePos) => true;
 
         int currentRepeat;
+
+        //making sure that we get the start time of the initial hitCircle
+        public override double getProperStartTime()
+        {
+            return initialCircle.HitObject.StartTime;
+        }
 
         protected override void Update()
         {

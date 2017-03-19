@@ -9,9 +9,9 @@ namespace osu.Game.Modes.Osu.Objects.Drawables
 {
     public class DrawableOsuHitObject : DrawableHitObject
     {
-        public const float TIME_PREEMPT = 600;
         public const float TIME_FADEIN = 400;
         public const float TIME_FADEOUT = 500;
+        public const float TIME_PREEMPT = 600;
 
         public DrawableOsuHitObject(OsuHitObject hitObject)
             : base(hitObject)
@@ -44,6 +44,7 @@ namespace osu.Game.Modes.Osu.Objects.Drawables
         {
             Alpha = 0;
         }
+        
     }
 
     public class OsuJudgementInfo : PositionalJudgementInfo
