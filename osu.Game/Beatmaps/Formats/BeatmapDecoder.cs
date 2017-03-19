@@ -81,6 +81,7 @@ namespace osu.Game.Beatmaps.Formats
 
             foreach (HitObject h in b.HitObjects)
             {
+                h.dynamicCircleSize = b.dynamicCircleSize;
                 if (h.NewCombo || i == -1) i = (i + 1) % colours.Count;
                 h.Colour = colours[i];
             }

@@ -87,6 +87,7 @@ namespace osu.Game.Screens.Select
             const float carousel_width = 640;
             const float filter_height = 100;
 
+            
             beatmapGroups = new List<BeatmapGroup>();
             Children = new Drawable[]
             {
@@ -339,7 +340,7 @@ namespace osu.Game.Screens.Select
 
             beatmapSet.Beatmaps = beatmapSet.Beatmaps.OrderBy(b => b.StarDifficulty).ToList();
 
-            var beatmap = new WorkingBeatmap(beatmapSet.Beatmaps.FirstOrDefault(), beatmapSet, database);
+            var beatmap = new WorkingBeatmap(beatmapSet.Beatmaps.FirstOrDefault(), beatmapSet, database,dCircleSize:true);
 
             var group = new BeatmapGroup(beatmap, beatmapSet)
             {

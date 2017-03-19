@@ -22,6 +22,8 @@ namespace osu.Game.Beatmaps
 
         private ArchiveReader getReader() => database?.GetReader(BeatmapSetInfo);
 
+        private bool dynamicCircleSize;
+
         private Texture background;
         private object backgroundLock = new object();
         public Texture Background
@@ -75,7 +77,7 @@ namespace osu.Game.Beatmaps
                         }
                     }
                     catch { }
-
+                    beatmap.dynamicCircleSize = dynamicCircleSize;
                     return beatmap;
                 }
             }
@@ -116,12 +118,13 @@ namespace osu.Game.Beatmaps
             this.beatmap = beatmap;
         }
 
-        public WorkingBeatmap(BeatmapInfo beatmapInfo, BeatmapSetInfo beatmapSetInfo, BeatmapDatabase database, bool withStoryboard = false)
+        public WorkingBeatmap(BeatmapInfo beatmapInfo, BeatmapSetInfo beatmapSetInfo, BeatmapDatabase database, bool withStoryboard = false, bool dCircleSize = false)
         {
             BeatmapInfo = beatmapInfo;
             BeatmapSetInfo = beatmapSetInfo;
             this.database = database;
             this.WithStoryboard = withStoryboard;
+            dynamicCircleSize = dCircleSize;
         }
 
         private bool isDisposed;

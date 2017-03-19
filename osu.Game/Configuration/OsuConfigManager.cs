@@ -31,6 +31,8 @@ namespace osu.Game.Configuration
             Set(OsuConfig.SnakingInSliders, true);
             Set(OsuConfig.SnakingOutSliders, false);
 
+            Set(OsuConfig.DynamicCircleSize, true);
+
             //todo: implement all settings below this line (remove the Disabled set when doing so).
 
             Set(OsuConfig.MouseSpeed, 1.0).Disabled = true;
@@ -156,6 +158,9 @@ namespace osu.Game.Configuration
             Set(OsuConfig.UpdateFailCount, 0).Disabled = true;
             //Set(OsuConfig.TreeSortMode, TreeGroupMode.Show_All).Disabled = true;
             //Set(OsuConfig.TreeSortMode2, TreeSortMode.Title).Disabled = true;
+
+          
+
             bool unicodeDefault = false;
             switch (Get<string>(OsuConfig.Language))
             {
@@ -199,6 +204,7 @@ namespace osu.Game.Configuration
         // New osu:
         PlayMode,
         Token,
+        DynamicCircleSize,
         // Imported from old osu:
         BeatmapDirectory,
         AllowPublicInvites,

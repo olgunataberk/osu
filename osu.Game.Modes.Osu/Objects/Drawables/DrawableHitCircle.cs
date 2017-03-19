@@ -7,13 +7,13 @@ using osu.Framework.Graphics.Transformations;
 using osu.Game.Modes.Objects.Drawables;
 using osu.Game.Modes.Osu.Objects.Drawables.Pieces;
 using OpenTK;
+using osu.Game.Configuration;
 
 namespace osu.Game.Modes.Osu.Objects.Drawables
 {
     public class DrawableHitCircle : DrawableOsuHitObject, IDrawableHitObjectWithProxiedApproach
     {
         private OsuHitObject osuObject;
-
         public ApproachCircle ApproachCircle;
         private CirclePiece circle;
         private RingPiece ring;
@@ -21,11 +21,7 @@ namespace osu.Game.Modes.Osu.Objects.Drawables
         private ExplodePiece explode;
         private NumberPiece number;
         private GlowPiece glow;
-        private float size;
-        public float getSize()
-        {
-            return size;
-        }
+     
         public double GetRandomNumber(double minimum, double maximum)
         {
             Random random = new Random();
@@ -39,9 +35,14 @@ namespace osu.Game.Modes.Osu.Objects.Drawables
 
             osuObject = h;
 
+         
             Position = osuObject.StackedPosition;
-            float dynamic = (float)GetRandomNumber(0.1, 4);
-            size = dynamic;
+            float dynamic;
+            if (h.dynamicCircleSize)
+            {
+                dynamic = (float)GetRandomNumber(0.1, 4);
+            }
+            else dynamic = 1;
             Scale = new Vector2(dynamic*osuObject.Scale);
 
             Children = new Drawable[]
