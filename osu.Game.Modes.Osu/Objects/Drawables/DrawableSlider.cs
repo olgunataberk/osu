@@ -86,6 +86,7 @@ namespace osu.Game.Modes.Osu.Objects.Drawables
 
                 var drawableTick = new DrawableSliderTick(tick)
                 {
+                    parent = this,
                     FadeInTime = fadeInTime,
                     FadeOutTime = fadeOutTime,
                     Position = tick.Position,

@@ -21,6 +21,7 @@ namespace osu.Game.Modes.Objects.Drawables
         //variables indicating the type of hitObject
         protected bool isSlider = false;
         protected bool isHitCircle = false;
+        protected bool isSliderTick = false;
 
         public event Action<DrawableHitObject, JudgementInfo> OnJudgement;
 
@@ -119,7 +120,7 @@ namespace osu.Game.Modes.Objects.Drawables
             Judgement.TimeOffset = Time.Current - HitObject.EndTime;
 
             //if the judged object is a slider
-            if (isSlider)
+            if (isSlider || isSliderTick)
                 Judgement.TimeStamp = getProperStartTime();
             else
                 Judgement.TimeStamp = HitObject.StartTime;

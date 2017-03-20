@@ -24,12 +24,16 @@ namespace osu.Game.Modes.Osu.Objects.Drawables
 
         public bool Tracking;
 
+        public DrawableSlider parent;
+
         public override bool RemoveWhenNotAlive => false;
 
         public override JudgementInfo CreateJudgementInfo() => new OsuJudgementInfo { MaxScore = OsuScoreResult.SliderTick };
 
         public DrawableSliderTick(SliderTick sliderTick) : base(sliderTick)
         {
+            isSliderTick = true;
+
             this.sliderTick = sliderTick;
 
             Size = new Vector2(16) * sliderTick.Scale;
@@ -61,6 +65,11 @@ namespace osu.Game.Modes.Osu.Objects.Drawables
             string sampleSet = (HitObject.Sample?.Set ?? SampleSet.Normal).ToString().ToLower();
 
             sample = audio.Sample.Get($@"Gameplay/{sampleSet}-slidertick");
+        }
+
+        public override double getProperStartTime()
+        {
+            return parent.getProperStartTime();
         }
 
         protected override void PlaySample()

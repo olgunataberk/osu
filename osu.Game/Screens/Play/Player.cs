@@ -52,6 +52,8 @@ namespace osu.Game.Screens.Play
 
         public int RestartCount;
 
+        private double initialMaxScore = 0;
+        private double initialScore = 0;
         private double firstMissTime = 0;
         private bool forceStartToggle = false;
 
@@ -269,6 +271,8 @@ namespace osu.Game.Screens.Play
         public void RestartFromFirstMiss()
         {
             double firstMissTimeStamp = scoreProcessor.getFirstMissTimeStamp();
+            double currentScore = scoreProcessor.GetScore().TotalScore;
+            double currentMaxScore = scoreProcessor.GetScore().MaxScore;
 
             sourceClock.Stop();
 
@@ -279,6 +283,8 @@ namespace osu.Game.Screens.Play
                 newPlayer.RestartCount = RestartCount + 1;
                 newPlayer.firstMissTime = firstMissTimeStamp;
                 newPlayer.forceStartToggle = true;
+                newPlayer.initialScore = currentScore;
+                newPlayer.initialMaxScore = currentMaxScore;
                 ValidForResume = false;
 
                 if (!Push(newPlayer))
@@ -301,6 +307,8 @@ namespace osu.Game.Screens.Play
             {
                 if (firstMissTime > 0)
                 {
+                    scoreProcessor.addScore(initialScore);
+                    scoreProcessor.addMaxScore(initialMaxScore);
                     hitRenderer.Schedule(() => hitRenderer.DrawableObjects.Where(h => (h.HitObject.StartTime < firstMissTime)).ForEach(h => h.Hide()));
                       /* h => Logger.Log("Found one",LoggingTarget.Runtime,LogLevel.Important)));*/
                       // Logger.Log("")

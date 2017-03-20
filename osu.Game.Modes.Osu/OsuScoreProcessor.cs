@@ -36,6 +36,7 @@ namespace osu.Game.Modes.Osu
                 }
             }
 
+            /*
             int score = 0;
             int maxScore = 0;
 
@@ -44,9 +45,12 @@ namespace osu.Game.Modes.Osu
                 score += j.ScoreValue;
                 maxScore += j.MaxScoreValue;
             }
-
-            TotalScore.Value = score;
-            Accuracy.Value = (double)score / maxScore;
+            */
+            int score = (judgement as OsuJudgementInfo).ScoreValue;
+            int maxScore = (judgement as OsuJudgementInfo).MaxScoreValue;
+            TotalScore.Value += score;
+            MaxScore.Value += maxScore;
+            Accuracy.Value = TotalScore.Value/MaxScore.Value;
         }
 
         public override double getFirstMissTimeStamp() => firstMissTimeStamp;
