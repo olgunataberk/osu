@@ -24,6 +24,8 @@ using osu.Game.Beatmaps;
 using OpenTK.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Logging;
+using osu.Framework.Input;
+using OpenTK.Input;
 
 namespace osu.Game.Screens.Play
 {
@@ -50,7 +52,10 @@ namespace osu.Game.Screens.Play
 
         public int RestartCount;
 
+        private double initialMaxScore = 0;
+        private double initialScore = 0;
         private double firstMissTime = 0;
+        private bool forceStartToggle = false;
 
         private double pauseCooldown = 1000;
         private double lastPauseActionTime = 0;
@@ -168,6 +173,9 @@ namespace osu.Game.Screens.Play
                 pauseOverlay
             };
 
+            //if started from first miss, the game waits for further input (Keypress "F") before beatmap is played.
+            playerInputManager.TryForceStart += forceStartClock;
+
         }
 
         private void initializeSkipButton()
@@ -214,6 +222,16 @@ namespace osu.Game.Screens.Play
                 isPaused = false;
             }
         }
+        
+        //Sourceclock is stopped if the beatmap is restarted from first miss try and start the clock here.
+        public void forceStartClock()
+        {
+            if (firstMissTime > 0 && forceStartToggle)
+            {
+                sourceClock.Start();
+                forceStartToggle = false;
+            }
+        }
 
         public void Resume()
         {
@@ -249,11 +267,14 @@ namespace osu.Game.Screens.Play
             });
         }
 
+        //copy of Restart function except small changes.
         public void RestartFromFirstMiss()
         {
             double firstMissTimeStamp = scoreProcessor.getFirstMissTimeStamp();
+            double currentScore = scoreProcessor.GetScore().TotalScore;
+            double currentMaxScore = scoreProcessor.GetScore().MaxScore;
 
-            sourceClock.Stop(); // If the clock is running and Restart is called the game will lag until relaunch
+            sourceClock.Stop();
 
             var newPlayer = new Player();
 
@@ -261,6 +282,9 @@ namespace osu.Game.Screens.Play
             {
                 newPlayer.RestartCount = RestartCount + 1;
                 newPlayer.firstMissTime = firstMissTimeStamp;
+                newPlayer.forceStartToggle = true;
+                newPlayer.initialScore = currentScore;
+                newPlayer.initialMaxScore = currentMaxScore;
                 ValidForResume = false;
 
                 if (!Push(newPlayer))
@@ -281,14 +305,23 @@ namespace osu.Game.Screens.Play
             Delay(750);
             Schedule(() =>
             {
-                sourceClock.Start();
-                initializeSkipButton();
                 if (firstMissTime > 0)
-                    sourceClock.Seek(firstMissTime);
-                foreach (DrawableHitObject h in hitRenderer.DrawableObjects)
                 {
-                    h.dynamicCircleSize = true;
+                    scoreProcessor.addScore(initialScore);
+                    scoreProcessor.addMaxScore(initialMaxScore);
+                    hitRenderer.Schedule(() => hitRenderer.DrawableObjects.Where(h => (h.HitObject.StartTime < firstMissTime)).ForEach(h => h.Hide()));
+                      /* h => Logger.Log("Found one",LoggingTarget.Runtime,LogLevel.Important)));*/
+                      // Logger.Log("")
+                    //firstMissTime minus the approach rate (time it takes for the approach circle to shrink) 
+                    sourceClock.Seek(firstMissTime-600);
+                    sourceClock.Stop();
                 }
+                else
+                {
+                    sourceClock.Start();
+                }
+                initializeSkipButton();
+              
             });
           
         }
@@ -306,6 +339,7 @@ namespace osu.Game.Screens.Play
             });
         }
 
+        //Instead of fail dialog show a modified version of pause screen
         private void onFailModified()
         {
             pauseOverlay.modifyOverlay();

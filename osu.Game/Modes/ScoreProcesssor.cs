@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using osu.Framework.Configuration;
 using osu.Game.Modes.Objects.Drawables;
+using osu.Framework.Logging;
 
 namespace osu.Game.Modes
 {
@@ -15,6 +16,7 @@ namespace osu.Game.Modes
     {
         public virtual Score GetScore() => new Score()
         {
+            MaxScore = MaxScore,
             TotalScore = TotalScore,
             Combo = Combo,
             MaxCombo = HighestCombo,
@@ -22,6 +24,8 @@ namespace osu.Game.Modes
             Health = Health,
         };
 
+        public readonly BindableDouble MaxScore = new BindableDouble { MinValue = 0 };
+        
         public readonly BindableDouble TotalScore = new BindableDouble { MinValue = 0 };
 
         public readonly BindableDouble Accuracy = new BindableDouble { MinValue = 0, MaxValue = 1 };
@@ -58,6 +62,16 @@ namespace osu.Game.Modes
         {
             Combo.ValueChanged += delegate { HighestCombo.Value = Math.Max(HighestCombo.Value, Combo.Value); };
             Judgements = new List<JudgementInfo>(hitObjectCount);
+        }
+
+        public void addScore(double sc)
+        {
+            TotalScore.Value += sc;
+        }
+
+        public void addMaxScore(double sc)
+        {
+            MaxScore.Value += sc;
         }
 
         //judgement has TimeOffset information

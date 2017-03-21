@@ -24,6 +24,8 @@ namespace osu.Game.Modes.Osu.Objects.Drawables
        
         public DrawableHitCircle(OsuHitObject h) : base(h)
         {
+            isHitCircle = true;
+
             Origin = Anchor.Centre;
 
             osuObject = h;

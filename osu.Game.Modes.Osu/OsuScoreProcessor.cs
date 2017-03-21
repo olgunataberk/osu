@@ -15,7 +15,7 @@ namespace osu.Game.Modes.Osu
             : base(hitObjectCount)
         {
             Health.Value = 1;
-            firstMissTimeStamp = float.NegativeInfinity;
+            firstMissTimeStamp = 0;
         }
 
         protected override void UpdateCalculations(JudgementInfo judgement)
@@ -29,13 +29,14 @@ namespace osu.Game.Modes.Osu
                         Health.Value += 0.1f;
                         break;
                     case HitResult.Miss:
-                        if (firstMissTimeStamp < 0) firstMissTimeStamp = judgement.TimeStamp;
+                        if (firstMissTimeStamp <= 0) firstMissTimeStamp = judgement.TimeStamp;
                         Combo.Value = 0;
                         Health.Value -= 0.2f;
                         break;
                 }
             }
 
+            /*
             int score = 0;
             int maxScore = 0;
 
@@ -44,9 +45,12 @@ namespace osu.Game.Modes.Osu
                 score += j.ScoreValue;
                 maxScore += j.MaxScoreValue;
             }
-
-            TotalScore.Value = score;
-            Accuracy.Value = (double)score / maxScore;
+            */
+            int score = (judgement as OsuJudgementInfo).ScoreValue;
+            int maxScore = (judgement as OsuJudgementInfo).MaxScoreValue;
+            TotalScore.Value += score;
+            MaxScore.Value += maxScore;
+            Accuracy.Value = TotalScore.Value/MaxScore.Value;
         }
 
         public override double getFirstMissTimeStamp() => firstMissTimeStamp;

@@ -20,6 +20,11 @@ namespace osu.Game.Modes.Objects.Drawables
     {
         public bool dynamicCircleSize;
 
+        //variables indicating the type of hitObject
+        protected bool isSlider = false;
+        protected bool isHitCircle = false;
+        protected bool isSliderTick = false;
+
         public event Action<DrawableHitObject, JudgementInfo> OnJudgement;
 
         public override bool HandleInput => Interactive;
@@ -86,6 +91,11 @@ namespace osu.Game.Modes.Objects.Drawables
             Expire(true);
         }
 
+        //this is to be overriden by DrawableSlider class.
+        public virtual double getProperStartTime() {
+            return HitObject.StartTime;
+        }
+
         private List<DrawableHitObject> nestedHitObjects;
 
         protected IEnumerable<DrawableHitObject> NestedHitObjects => nestedHitObjects;
@@ -110,7 +120,12 @@ namespace osu.Game.Modes.Objects.Drawables
                 return false;
 
             Judgement.TimeOffset = Time.Current - HitObject.EndTime;
-            Judgement.TimeStamp = HitObject.StartTime;
+
+            //if the judged object is a slider
+            if (isSlider || isSliderTick)
+                Judgement.TimeStamp = getProperStartTime();
+            else
+                Judgement.TimeStamp = HitObject.StartTime;
 
             CheckJudgement(userTriggered);
 
