@@ -340,7 +340,7 @@ namespace osu.Game.Screens.Select
 
             beatmapSet.Beatmaps = beatmapSet.Beatmaps.OrderBy(b => b.StarDifficulty).ToList();
 
-            var beatmap = new WorkingBeatmap(beatmapSet.Beatmaps.FirstOrDefault(), beatmapSet, database,dCircleSize:true);
+            var beatmap = new WorkingBeatmap(beatmapSet.Beatmaps.FirstOrDefault(), beatmapSet, database);
 
             var group = new BeatmapGroup(beatmap, beatmapSet)
             {

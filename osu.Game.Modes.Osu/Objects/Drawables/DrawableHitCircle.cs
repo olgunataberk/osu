@@ -7,7 +7,6 @@ using osu.Framework.Graphics.Transformations;
 using osu.Game.Modes.Objects.Drawables;
 using osu.Game.Modes.Osu.Objects.Drawables.Pieces;
 using OpenTK;
-using osu.Game.Configuration;
 
 namespace osu.Game.Modes.Osu.Objects.Drawables
 {
@@ -22,11 +21,7 @@ namespace osu.Game.Modes.Osu.Objects.Drawables
         private NumberPiece number;
         private GlowPiece glow;
      
-        public double GetRandomNumber(double minimum, double maximum)
-        {
-            Random random = new Random();
-            return random.NextDouble() * (maximum - minimum) + minimum;
-        }
+       
         public DrawableHitCircle(OsuHitObject h) : base(h)
         {
             Origin = Anchor.Centre;
@@ -35,13 +30,7 @@ namespace osu.Game.Modes.Osu.Objects.Drawables
 
          
             Position = osuObject.StackedPosition;
-            float dynamic;
-            if (h.dynamicCircleSize)
-            {
-                dynamic = (float)GetRandomNumber(0.1, 4);
-            }
-            else dynamic = 1;
-            Scale = new Vector2(dynamic*osuObject.Scale);
+            Scale = new Vector2(osuObject.Scale);
 
             Children = new Drawable[]
             {
@@ -80,7 +69,11 @@ namespace osu.Game.Modes.Osu.Objects.Drawables
             //may not be so correct
             Size = circle.DrawSize;
         }
-
+        public void resize()
+        {
+            float dynamic = (float)osu.Framework.MathUtils.RNG.NextDouble(0.1, 4);
+            Scale = new Vector2(dynamic* osuObject.Scale);
+        }
         double hit50 = 150;
         double hit100 = 80;
         double hit300 = 30;

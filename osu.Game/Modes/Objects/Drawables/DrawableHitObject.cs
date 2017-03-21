@@ -18,6 +18,8 @@ namespace osu.Game.Modes.Objects.Drawables
 {
     public abstract class DrawableHitObject : Container, IStateful<ArmedState>
     {
+        public bool dynamicCircleSize;
+
         public event Action<DrawableHitObject, JudgementInfo> OnJudgement;
 
         public override bool HandleInput => Interactive;
@@ -145,7 +147,7 @@ namespace osu.Game.Modes.Objects.Drawables
 
             UpdateJudgement(false);
         }
-
+     
         protected abstract void UpdateState(ArmedState state);
     }
 
@@ -176,4 +178,5 @@ namespace osu.Game.Modes.Objects.Drawables
         [Description(@"Hit")]
         Hit,
     }
+    
 }

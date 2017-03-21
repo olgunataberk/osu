@@ -15,10 +15,15 @@ namespace osu.Game.Modes.Osu.UI
 
         protected override Playfield CreatePlayfield() => new OsuPlayfield();
 
-        protected override DrawableHitObject GetVisualRepresentation(OsuHitObject h)
+        protected override DrawableHitObject GetVisualRepresentation(OsuHitObject h,bool dynamic)
         {
             if (h is HitCircle)
-                return new DrawableHitCircle(h as HitCircle);
+            {
+                DrawableHitCircle d = new DrawableHitCircle(h as HitCircle);
+                if(dynamic)
+                    d.resize();
+                return d;
+            }
             if (h is Slider)
                 return new DrawableSlider(h as Slider);
             if (h is Spinner)

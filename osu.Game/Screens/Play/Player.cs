@@ -64,7 +64,7 @@ namespace osu.Game.Screens.Play
         private ScoreProcessor scoreProcessor;
         private HitRenderer hitRenderer;
         private Bindable<int> dimLevel;
-        private bool dCircleSize;
+        private bool dynamicCircleSize;
         private SkipButton skipButton;
 
         private ScoreOverlay scoreOverlay;
@@ -75,18 +75,16 @@ namespace osu.Game.Screens.Play
         private void load(AudioManager audio, BeatmapDatabase beatmaps, OsuGameBase game, OsuConfigManager config)
         {
             dimLevel = config.GetBindable<int>(OsuConfig.DimLevel);
-            dCircleSize = config.GetBindable<bool>(OsuConfig.DynamicCircleSize);
+            dynamicCircleSize = config.GetBindable<bool>(OsuConfig.DynamicCircleSize);
             try
             {
                 if (Beatmap == null)
-                    Beatmap = beatmaps.GetWorkingBeatmap(BeatmapInfo, withStoryboard: true, dynamicCircleSize:dCircleSize);
+                    Beatmap = beatmaps.GetWorkingBeatmap(BeatmapInfo, withStoryboard: true);
 
                 if ((Beatmap?.Beatmap?.HitObjects.Count ?? 0) == 0)
                     throw new Exception("No valid objects were found!");
 
-                foreach(Modes.Objects.HitObject h in Beatmap?.Beatmap?.HitObjects){
-                    h.dynamicCircleSize = dCircleSize;
-                }
+                
             }
             catch (Exception e)
             {
@@ -147,7 +145,7 @@ namespace osu.Game.Screens.Play
             //GOTO Score processor line 63
             hitRenderer.OnJudgement += scoreProcessor.AddJudgement;
             hitRenderer.OnAllJudged += onPass;
-
+            hitRenderer.dynamicCircleSize = dynamicCircleSize;
             //bind ScoreProcessor to ourselves (for a fail situation)
             scoreProcessor.Failed += onFailModified;
 
@@ -169,6 +167,7 @@ namespace osu.Game.Screens.Play
                 scoreOverlay,
                 pauseOverlay
             };
+
         }
 
         private void initializeSkipButton()
@@ -286,7 +285,12 @@ namespace osu.Game.Screens.Play
                 initializeSkipButton();
                 if (firstMissTime > 0)
                     sourceClock.Seek(firstMissTime);
+                foreach (DrawableHitObject h in hitRenderer.DrawableObjects)
+                {
+                    h.dynamicCircleSize = true;
+                }
             });
+          
         }
 
         private void onPass()
@@ -355,5 +359,6 @@ namespace osu.Game.Screens.Play
         {
             Background?.FadeTo((100f - dimLevel) / 100, 800);
         }
+        
     }
 }

@@ -19,7 +19,6 @@ namespace osu.Game.Modes.Osu.Objects
             foreach (HitObject h in beatmap.HitObjects)
             {
                 if (h.NewCombo) combo = 0;
-                h.dynamicCircleSize = beatmap.dynamicCircleSize;
                 h.ComboIndex = combo++;
                 output.Add(h as OsuHitObject);
             }

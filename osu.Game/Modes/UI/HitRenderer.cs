@@ -27,7 +27,7 @@ namespace osu.Game.Modes.UI
         }
 
         protected Playfield Playfield;
-
+        public bool dynamicCircleSize;
         public bool AllObjectsJudged => Playfield.HitObjects.Children.First()?.Judgement.Result != null; //reverse depth sort means First() instead of Last().
 
         public IEnumerable<DrawableHitObject> DrawableObjects => Playfield.HitObjects.Children;
@@ -75,7 +75,7 @@ namespace osu.Game.Modes.UI
             if (objects == null) return;
             foreach (T h in objects)
             {
-                var drawableObject = GetVisualRepresentation(h);
+                var drawableObject = GetVisualRepresentation(h,dynamicCircleSize);
 
                 if (drawableObject == null) continue;
 
@@ -88,6 +88,6 @@ namespace osu.Game.Modes.UI
 
         private void onJudgement(DrawableHitObject o, JudgementInfo j) => TriggerOnJudgement(j);
 
-        protected abstract DrawableHitObject GetVisualRepresentation(T h);
+        protected abstract DrawableHitObject GetVisualRepresentation(T h,bool b);
     }
 }
