@@ -52,6 +52,7 @@ namespace osu.Game.Screens.Play
 
         public int RestartCount;
 
+        private double scoreMultiplier = 1;
         private double initialMaxScore = 0;
         private double initialScore = 0;
         private double firstMissTime = 0;
@@ -259,7 +260,7 @@ namespace osu.Game.Screens.Play
             {
                 newPlayer.RestartCount = RestartCount + 1;
                 ValidForResume = false;
-
+                newPlayer.scoreMultiplier = this.scoreMultiplier;
                 if (!Push(newPlayer))
                 {
                     // Error(?)
@@ -285,6 +286,7 @@ namespace osu.Game.Screens.Play
                 newPlayer.forceStartToggle = true;
                 newPlayer.initialScore = currentScore;
                 newPlayer.initialMaxScore = currentMaxScore;
+                newPlayer.scoreMultiplier = this.scoreMultiplier * 0.75;
                 ValidForResume = false;
 
                 if (!Push(newPlayer))
@@ -307,6 +309,7 @@ namespace osu.Game.Screens.Play
             {
                 if (firstMissTime > 0)
                 {
+                    scoreProcessor.setScoreMultiplier(this.scoreMultiplier);
                     scoreProcessor.addScore(initialScore);
                     scoreProcessor.addMaxScore(initialMaxScore);
                     hitRenderer.Schedule(() => hitRenderer.DrawableObjects.Where(h => (h.HitObject.StartTime < firstMissTime)).ForEach(h => h.Hide()));

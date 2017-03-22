@@ -24,6 +24,8 @@ namespace osu.Game.Modes
             Health = Health,
         };
 
+        protected double scoreMultiplier = 1;
+
         public readonly BindableDouble MaxScore = new BindableDouble { MinValue = 0 };
         
         public readonly BindableDouble TotalScore = new BindableDouble { MinValue = 0 };
@@ -64,14 +66,19 @@ namespace osu.Game.Modes
             Judgements = new List<JudgementInfo>(hitObjectCount);
         }
 
+        public void setScoreMultiplier(double sm)
+        {
+            scoreMultiplier = sm;
+        }
+
         public void addScore(double sc)
         {
-            TotalScore.Value += sc;
+            TotalScore.Value += sc*scoreMultiplier;
         }
 
         public void addMaxScore(double sc)
         {
-            MaxScore.Value += sc;
+            MaxScore.Value += sc * scoreMultiplier;
         }
 
         //judgement has TimeOffset information

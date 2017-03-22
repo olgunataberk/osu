@@ -31,6 +31,7 @@ namespace osu.Game.Overlays.Pause
         public Action OnQuit;
 
         private ResumeButton resumeButton;
+        private OsuSpriteText osuSpriteText;
 
         public int Retries
         {
@@ -73,6 +74,7 @@ namespace osu.Game.Overlays.Pause
         public void modifyOverlay()
         {
             resumeButton.Hide(true);
+            osuSpriteText.Text = "You failed";
             OnResume = null;
         }
 
@@ -129,18 +131,7 @@ namespace osu.Game.Overlays.Pause
                             Anchor = Anchor.TopCentre,
                             Children = new Drawable[]
                             {
-                                new OsuSpriteText
-                                {
-                                    Text = @"paused",
-                                    Font = @"Exo2.0-Medium",
-                                    Spacing = new Vector2(5, 0),
-                                    Origin = Anchor.TopCentre,
-                                    Anchor = Anchor.TopCentre,
-                                    TextSize = 30,
-                                    Colour = colours.Yellow,
-                                    Shadow = true,
-                                    ShadowColour = new Color4(0, 0, 0, 0.25f)
-                                },
+                                osuSpriteText,
                                 new OsuSpriteText
                                 {
                                     Text = @"you're not going to do what i think you're going to do, are ya?",
@@ -230,15 +221,27 @@ namespace osu.Game.Overlays.Pause
 
         public PauseOverlay()
         {
-        resumeButton = new ResumeButton
-        {
-            RelativeSizeAxes = Axes.X,
-            Origin = Anchor.TopCentre,
-            Anchor = Anchor.TopCentre,
-            Height = button_height,
-            Action = resume
-        };
-        RelativeSizeAxes = Axes.Both;
+            osuSpriteText = new OsuSpriteText
+            {
+                Text = @"paused",
+                Font = @"Exo2.0-Medium",
+                Spacing = new Vector2(5, 0),
+                Origin = Anchor.TopCentre,
+                Anchor = Anchor.TopCentre,
+                TextSize = 30,
+                Colour = Color4.Yellow,
+                Shadow = true,
+                ShadowColour = new Color4(0, 0, 0, 0.25f)
+            };
+            resumeButton = new ResumeButton
+            {
+                RelativeSizeAxes = Axes.X,
+                Origin = Anchor.TopCentre,
+                Anchor = Anchor.TopCentre,
+                Height = button_height,
+                Action = resume
+            };
+            RelativeSizeAxes = Axes.Both;
         }
     }
 }

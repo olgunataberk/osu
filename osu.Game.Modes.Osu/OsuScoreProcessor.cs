@@ -48,8 +48,8 @@ namespace osu.Game.Modes.Osu
             */
             int score = (judgement as OsuJudgementInfo).ScoreValue;
             int maxScore = (judgement as OsuJudgementInfo).MaxScoreValue;
-            TotalScore.Value += score;
-            MaxScore.Value += maxScore;
+            TotalScore.Value += score * scoreMultiplier;
+            MaxScore.Value += maxScore * scoreMultiplier;
             Accuracy.Value = TotalScore.Value/MaxScore.Value;
         }
 
