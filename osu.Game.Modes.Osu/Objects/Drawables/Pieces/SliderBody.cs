@@ -29,7 +29,7 @@ namespace osu.Game.Modes.Osu.Objects.Drawables.Pieces
                 path.PathWidth = value;
             }
         }
-
+       
         public double? SnakedStart { get; private set; }
         public double? SnakedEnd { get; private set; }
 

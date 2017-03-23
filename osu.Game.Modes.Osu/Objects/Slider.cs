@@ -26,7 +26,11 @@ namespace osu.Game.Modes.Osu.Objects
                 Curve.Offset = StackOffset;
             }
         }
-
+        public void resize()
+        {
+            float multiplier = (float)osu.Framework.MathUtils.RNG.NextDouble(0.1, 3);
+            Scale *= multiplier;
+        }
         public List<Vector2> ControlPoints
         {
             get { return Curve.ControlPoints; }

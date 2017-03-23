@@ -27,7 +27,7 @@ namespace osu.Game.Modes.Osu.Objects.Drawables
         SliderBall ball;
 
         SliderBouncer bouncer1, bouncer2;
-
+       
         public DrawableSlider(Slider s) : base(s)
         {
 
@@ -40,7 +40,7 @@ namespace osu.Game.Modes.Osu.Objects.Drawables
                 body = new SliderBody(s)
                 {
                     Position = s.StackedPosition,
-                    PathWidth = s.Scale * 64 ,  //slider boyu burada degisecek.
+                    PathWidth = s.Scale * 64 , 
                   // PathWidth = initialCircle.getSize()*64,
                 },
                 ticks = new Container<DrawableSliderTick>(),

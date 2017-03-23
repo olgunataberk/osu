@@ -17,7 +17,7 @@ namespace osu.Game.Modes.Osu.Objects.Drawables.Pieces
         private Box follow;
 
         const float width = 128;
-
+       
         public SliderBall(Slider slider)
         {
             this.slider = slider;
@@ -27,7 +27,7 @@ namespace osu.Game.Modes.Osu.Objects.Drawables.Pieces
             Origin = Anchor.Centre;
             BorderThickness = 10;
             BorderColour = Color4.Orange;
-
+            
             Children = new Drawable[]
             {
                 follow = new Box

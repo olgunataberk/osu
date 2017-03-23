@@ -25,9 +25,20 @@ namespace osu.Game.Modes.Osu.UI
                 return d;
             }
             if (h is Slider)
-                return new DrawableSlider(h as Slider);
+            {
+                
+                Slider x = (Slider)h;
+                if(dynamic)
+                    x.resize();
+               return new DrawableSlider(x as Slider);
+            }
             if (h is Spinner)
+            {
+                Spinner s = (Spinner)h;
+                if (dynamic)
+                    s.resize();
                 return new DrawableSpinner(h as Spinner);
+            }
             return null;
         }
     }

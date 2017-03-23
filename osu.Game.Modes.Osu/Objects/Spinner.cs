@@ -10,5 +10,11 @@ namespace osu.Game.Modes.Osu.Objects
         public double Length;
 
         public override double EndTime => StartTime + Length;
+
+        public void resize()
+        {
+            float multiplier = (float)osu.Framework.MathUtils.RNG.NextDouble(0.1, 3);
+            Scale *= multiplier;
+        }
     }
 }
