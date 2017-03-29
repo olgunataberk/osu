@@ -71,9 +71,11 @@ namespace osu.Game.Modes.Osu.Objects.Drawables
             //may not be so correct
             Size = circle.DrawSize;
         }
-        public void resize()
+        public void resize(int min, int max)
         {
-            float dynamic = (float)osu.Framework.MathUtils.RNG.NextDouble(0.1, 4);
+            double minSize = (min == 0) ? 1 : (min == 1) ? 0.75 : (min == 2) ? 0.5 : (min == 3) ? 0.25 : 0.1;
+            double maxSize = max; 
+            float dynamic = (float)osu.Framework.MathUtils.RNG.NextDouble(minSize, maxSize);
             Scale = new Vector2(dynamic* osuObject.Scale);
         }
         double hit50 = 150;

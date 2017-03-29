@@ -71,6 +71,8 @@ namespace osu.Game.Screens.Play
         private HitRenderer hitRenderer;
         private Bindable<int> dimLevel;
         private bool dynamicCircleSize;
+        private Bindable<int> dynamicLevelMax;
+        private Bindable<int> dynamicLevelMin;
         private SkipButton skipButton;
 
         private ScoreOverlay scoreOverlay;
@@ -82,6 +84,9 @@ namespace osu.Game.Screens.Play
         {
             dimLevel = config.GetBindable<int>(OsuConfig.DimLevel);
             dynamicCircleSize = config.GetBindable<bool>(OsuConfig.DynamicCircleSize);
+            dynamicLevelMax = config.GetBindable<int>(OsuConfig.DynamicLevelMax);
+            dynamicLevelMin = config.GetBindable<int>(OsuConfig.DynamicLevelMin);
+
             try
             {
                 if (Beatmap == null)
@@ -152,6 +157,9 @@ namespace osu.Game.Screens.Play
             hitRenderer.OnJudgement += scoreProcessor.AddJudgement;
             hitRenderer.OnAllJudged += onPass;
             hitRenderer.dynamicCircleSize = dynamicCircleSize;
+            hitRenderer.dLevelMax = dynamicLevelMax;
+            hitRenderer.dLevelMin = dynamicLevelMin;
+
             //bind ScoreProcessor to ourselves (for a fail situation)
             scoreProcessor.Failed += onFailModified;
 
@@ -299,6 +307,7 @@ namespace osu.Game.Screens.Play
 
         protected override void LoadComplete()
         {
+            
             base.LoadComplete();
 
             Content.Delay(250);
@@ -370,6 +379,7 @@ namespace osu.Game.Screens.Play
             Background?.FadeTo((100f - dimLevel) / 100, 1000);
 
             Content.Alpha = 0;
+
             dimLevel.ValueChanged += dimChanged;
         }
 
@@ -396,6 +406,7 @@ namespace osu.Game.Screens.Play
         {
             Background?.FadeTo((100f - dimLevel) / 100, 800);
         }
+        
         
     }
 }

@@ -25,6 +25,8 @@ namespace osu.Game.Configuration
 
             Set(OsuConfig.CursorSize, 1.0, 0.5f, 2);
             Set(OsuConfig.DimLevel, 30, 0, 100);
+            Set(OsuConfig.DynamicLevelMax, 2, 1, 4);
+            Set(OsuConfig.DynamicLevelMin, 2, 0, 4);
 
             Set(OsuConfig.MouseDisableButtons, false);
 
@@ -205,6 +207,7 @@ namespace osu.Game.Configuration
         PlayMode,
         Token,
         DynamicCircleSize,
+        DynamicLevelMax, DynamicLevelMin,
         // Imported from old osu:
         BeatmapDirectory,
         AllowPublicInvites,

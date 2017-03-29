@@ -63,6 +63,16 @@ namespace osu.Game.Overlays.Options.Sections.Gameplay
                     LabelText = "Dynamic circle size enable",
                     Bindable = config.GetBindable<bool>(OsuConfig.DynamicCircleSize)
                 },
+                new OptionSlider<int>
+                {
+                    LabelText = "Dynamic size maximum size: ",
+                    Bindable = (BindableInt)config.GetBindable<int>(OsuConfig.DynamicLevelMax)
+                },
+                new OptionSlider<int>
+                {
+                    LabelText = "Dynamic size minimum size: (0 for 1, 1 for 0.75, 2 for 0.5, 3 for 0.25, 4 for 0.1)",
+                    Bindable = (BindableInt)config.GetBindable<int>(OsuConfig.DynamicLevelMin)
+                },
             };
         }
     }

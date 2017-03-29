@@ -21,7 +21,7 @@ namespace osu.Game.Modes.Mania.UI
 
         protected override Playfield CreatePlayfield() => new ManiaPlayfield(columns);
 
-        protected override DrawableHitObject GetVisualRepresentation(ManiaBaseHit h,bool dynamic)
+        protected override DrawableHitObject GetVisualRepresentation(ManiaBaseHit h,bool dynamic,int levelMin, int levelMax)
         {
             return null;
             //return new DrawableNote(h)
