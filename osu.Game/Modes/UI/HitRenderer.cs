@@ -32,6 +32,7 @@ namespace osu.Game.Modes.UI
         public bool AllObjectsJudged => Playfield.HitObjects.Children.First()?.Judgement.Result != null; //reverse depth sort means First() instead of Last().
 
         public IEnumerable<DrawableHitObject> DrawableObjects => Playfield.HitObjects.Children;
+        
     }
 
     public abstract class HitRenderer<T> : HitRenderer
@@ -60,6 +61,8 @@ namespace osu.Game.Modes.UI
             RelativeSizeAxes = Axes.Both;
         }
 
+        
+
         [BackgroundDependencyLoader]
         private void load()
         {
@@ -86,7 +89,7 @@ namespace osu.Game.Modes.UI
             }
             Playfield.PostProcess();
         }
-
+       
         private void onJudgement(DrawableHitObject o, JudgementInfo j) => TriggerOnJudgement(j);
 
         protected abstract DrawableHitObject GetVisualRepresentation(T h,bool b,int i,int j);

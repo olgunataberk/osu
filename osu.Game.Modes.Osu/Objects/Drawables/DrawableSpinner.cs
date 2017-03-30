@@ -22,6 +22,14 @@ namespace osu.Game.Modes.Osu.Objects.Drawables
         private Container circleContainer;
         private DrawableHitCircle circle;
 
+        public void resize(int min, int max)
+        {
+            double minSize = (min == 0) ? 1 : (min == 1) ? 0.75 : (min == 2) ? 0.5 : (min == 3) ? 0.25 : 0.1;
+            double maxSize = max;
+            float dynamic = (float)osu.Framework.MathUtils.RNG.NextDouble(minSize, maxSize);
+            circle.Scale = new Vector2(dynamic * spinner.Scale);
+        }
+
         public DrawableSpinner(Spinner s) : base(s)
         {
             Origin = Anchor.Centre;

@@ -27,19 +27,21 @@ namespace osu.Game.Modes.Osu.UI
             if (h is Slider)
             {
 
-                /* Slider x = (Slider)h;
-                 if(dynamic  )
-                     x.resize();*/
-                    
-               return new DrawableSlider(h as Slider);
+                 DrawableSlider x = new DrawableSlider(h as Slider);
+                /* if(dynamic  )
+                     x.resize(levelMin,levelMax);
+                  */  
+               return x ;
+               // return new DrawableSlider(h as Slider);
             }
             if (h is Spinner)
-            {/*
-                Spinner s = (Spinner)h;
+            {
+                DrawableSpinner s = new DrawableSpinner(h as Spinner);
                 if (dynamic )
-                    s.resize();*/
-                    
-                return new DrawableSpinner(h as Spinner);
+                    s.resize(levelMin,levelMax);
+
+                
+                return s;
             }
             return null;
         }

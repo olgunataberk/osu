@@ -207,7 +207,8 @@ namespace osu.Game.Configuration
         PlayMode,
         Token,
         DynamicCircleSize,
-        DynamicLevelMax, DynamicLevelMin,
+        DynamicLevelMax,
+        DynamicLevelMin,
         // Imported from old osu:
         BeatmapDirectory,
         AllowPublicInvites,

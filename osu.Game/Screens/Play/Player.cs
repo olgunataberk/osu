@@ -70,7 +70,7 @@ namespace osu.Game.Screens.Play
         private ScoreProcessor scoreProcessor;
         private HitRenderer hitRenderer;
         private Bindable<int> dimLevel;
-        private bool dynamicCircleSize;
+        private Bindable<bool> dynamicCircleSize;
         private Bindable<int> dynamicLevelMax;
         private Bindable<int> dynamicLevelMin;
         private SkipButton skipButton;
@@ -335,7 +335,7 @@ namespace osu.Game.Screens.Play
                 initializeSkipButton();
               
             });
-          
+            
         }
 
         private void onPass()
@@ -381,6 +381,7 @@ namespace osu.Game.Screens.Play
             Content.Alpha = 0;
 
             dimLevel.ValueChanged += dimChanged;
+            
         }
 
         protected override bool OnExiting(Screen next)
@@ -406,7 +407,10 @@ namespace osu.Game.Screens.Play
         {
             Background?.FadeTo((100f - dimLevel) / 100, 800);
         }
-        
+        private void dynamicSizeChanged(object sender, EventArgs e)
+        {
+            throw new Exception();
+        }
         
     }
 }

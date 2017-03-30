@@ -97,6 +97,17 @@ namespace osu.Game.Modes.Osu.Objects.Drawables
             }
         }
 
+
+        public void resize(int min, int max)
+        {
+            double minSize = (min == 0) ? 1 : (min == 1) ? 0.75 : (min == 2) ? 0.5 : (min == 3) ? 0.25 : 0.1;
+            double maxSize = max;
+            if (max > 3) maxSize = 3;
+            float dynamic = (float)osu.Framework.MathUtils.RNG.NextDouble(minSize, maxSize);
+            Scale = new Vector2(dynamic * slider.Scale);
+        }
+       
+
         // Since the DrawableSlider itself is just a container without a size we need to
         // pass all input through.
         public override bool Contains(Vector2 screenSpacePos) => true;
@@ -187,7 +198,7 @@ namespace osu.Game.Modes.Osu.Objects.Drawables
 
             FadeOut(800);
         }
-
+       
         public Drawable ProxiedLayer => initialCircle.ApproachCircle;
     }
 
