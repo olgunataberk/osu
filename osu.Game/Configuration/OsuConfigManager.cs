@@ -25,7 +25,7 @@ namespace osu.Game.Configuration
 
             Set(OsuConfig.CursorSize, 1.0, 0.5f, 2);
             Set(OsuConfig.DimLevel, 30, 0, 100);
-            Set(OsuConfig.DynamicLevelMax, 2, 1, 4);
+            Set(OsuConfig.DynamicLevelMax, 2, 1, 3);
             Set(OsuConfig.DynamicLevelMin, 2, 0, 4);
 
             Set(OsuConfig.MouseDisableButtons, false);

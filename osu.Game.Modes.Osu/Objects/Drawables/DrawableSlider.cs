@@ -101,10 +101,11 @@ namespace osu.Game.Modes.Osu.Objects.Drawables
         public void resize(int min, int max)
         {
             double minSize = (min == 0) ? 1 : (min == 1) ? 0.75 : (min == 2) ? 0.5 : (min == 3) ? 0.25 : 0.1;
-            double maxSize = max;
-            if (max > 3) maxSize = 3;
+            double maxSize = (max == 1) ? 1 : (max == 2) ? 1.25 : 1.5;
             float dynamic = (float)osu.Framework.MathUtils.RNG.NextDouble(minSize, maxSize);
-            Scale = new Vector2(dynamic * slider.Scale);
+           // ScaleTo((Scale * dynamic));
+            this.Scale = Vector2.Multiply(Scale, dynamic);
+            
         }
        
 

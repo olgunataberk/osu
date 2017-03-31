@@ -15,14 +15,7 @@ namespace osu.Game.Modes.Osu.Objects
         public override double EndTime => StartTime + RepeatCount * Curve.Length / Velocity;
 
         public override Vector2 EndPosition => RepeatCount % 2 == 0 ? Position : Curve.PositionAt(1);
-        public void resize(int min, int max)
-        {
-            double minSize = (min == 0) ? 1 : (min == 1) ? 0.75 : (min == 2) ? 0.5 : (min == 3) ? 0.25 : 0.1;
-            double maxSize = max;
-            if (max > 3) maxSize = 3;
-            float dynamic = (float)osu.Framework.MathUtils.RNG.NextDouble(minSize, maxSize);
-            Scale *=dynamic;
-        }
+        
         private int stackHeight;
         public override int StackHeight
         {

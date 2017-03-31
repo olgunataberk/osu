@@ -55,8 +55,7 @@ namespace osu.Game
         private OsuScreen screenStack;
 
         private VolumeControl volume;
-
-        public Bindable<bool> dynamicCircleSize;
+        
 
         public Bindable<PlayMode> PlayMode;
 
@@ -87,7 +86,6 @@ namespace osu.Game
             }
 
             Dependencies.Cache(this);
-            dynamicCircleSize = LocalConfig.GetBindable<bool>(OsuConfig.DynamicCircleSize);
             PlayMode = LocalConfig.GetBindable<PlayMode>(OsuConfig.PlayMode);
         }
 
